@@ -59,16 +59,33 @@ void DisplayBoard(vector<int> &Row)
 /**
 *	Recursive implementation of the solution to the eight-queens problem
 */
-bool PlaceQueen(int column) {
+void PlaceQueen(int column) {
 	if (column == NUMBER_COLS) { // Base Condition
-		return true; // Successfully assigned all column queens in the board.  We can just return true.
+		// Add this solution to the vector of possible solutions
+		PlacementSolutions.push_back(RowPlacement);
+		return; // Successfully assigned all column queens in the board.  We can just return true.
 	} else {
 		// Try to assign this column's queen to a valid row
 		for (int row = 0; row < RowPlacement.size(); ++row) {
-			// FIXME: complete as in EX7_2, but this time find all valid solutions!
+			
+			// If RowPlacement[row] is not UNASSIGN_VALUE, we want to move to the next row
+			if (RowPlacement[row] != UNASSIGN_VALUE) continue;
+
+			// Check if assigning a column queen to this row is valid
+			if (!ValidPosition(column, row)) // a diagonal invalidates this position
+				continue;
+
+			// Assign column to Row[row]
+			RowPlacement[row] = column;
+
+			// Recursively call the function to proceed to the next column.
+			PlaceQueen(column + 1);
+
+			// Unassign the assignment of the column's queen to this row, and try the next one
+			RowPlacement[row] = UNASSIGN_VALUE;
 			
 		}
-		return false; // Tried every available row, so it is time to call it quits
+		return; // Tried every available row, so it is time to call it quits
 	}
 }
 
