@@ -9,13 +9,32 @@
 #include <algorithm>
 using namespace std;
 
+///////////////////////
+// Ben Morledge-Hampton
+// 
+// Recursion
+//
+// 4/25/2017
+///////////////////////
+
 /**
 *	Template function for performing the recursive binary search
 */
 template <typename T>
 int binary_search(const vector<T> &items, int first, int last, T target) {
-	// FIXME: Implement recursive binary search
-	return -1;
+
+	// If an empty vector is passed, return -1 to tell that the target is not in the list.
+	if (last - first < 0)
+		return -1;
+	// If the center is less than the target, the target can only be above it, so recursively call the function with the values above the center.
+	else if (items[(last + first) / 2] < target)
+		return binary_search(items, (last + first) / 2 + 1, last, target);
+	// If the center is greater than the target, the target can only be below it, so recursively call the function with the values below the center.
+	else if (items[(last + first) / 2] > target)
+		return binary_search(items, first, (last + first) / 2 - 1, target);
+	// If you get this far, it means that the center is the target!  Hooray!
+	else return ((last + first) / 2);
+
 }
 
 /**
