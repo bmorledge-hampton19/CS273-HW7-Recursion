@@ -7,6 +7,14 @@
 
 using namespace std;
 
+///////////////////////
+// Ben Morledge-Hampton
+// 
+// Recursion
+//
+// 4/25/2017
+///////////////////////
+
 const int UNASSIGN_VALUE = -1;
 
 const int NUMBER_ROWS = 8; // Number of rows in our chess board
@@ -64,25 +72,22 @@ bool PlaceQueen(int column) {
 		// Try to assign this column's queen to a valid row
 		for (int row = 0; row < RowPlacement.size(); ++row) {
 
-			// FIXME: Check if this row has already been assigned
-			//        If RowPlacement[row] is not UNASSIGN_VALUE, we want to move to the next row
-			
+			// If RowPlacement[row] is not UNASSIGN_VALUE, we want to move to the next row
+			if (RowPlacement[row] != UNASSIGN_VALUE) continue;
 
 			// Check if assigning a column queen to this row is valid
 			if (!ValidPosition(column, row)) // a diagonal invalidates this position
 				continue;
 
-			// FIXME: Assign column to Row[row]
+			// Assign column to Row[row]
+			RowPlacement[row] = column;
+
+			// Make a recursive call for the next function.  If it returns true, propogate it up the line to show that the problem has been solved.
+			if (PlaceQueen(column + 1)) return true;
 			
 
-			// FIXME: Recursively call PlaceQueen to place a queen in the next column.
-			//        Remember to check if the recursive call to placing the queen in the next column 
-			//        was successful, i.e. it returned true.
-			//        If it was successful, you can assume the assigment of this column's queen 
-			//        to RowPlacement[row] was also successful, and hence return true here.
-			
-
-			// FIXME: Unassign the assignment of the column's queen to this row, and try the next one
+			// Unassign the assignment of the column's queen to this row, and try the next one
+			RowPlacement[row] = UNASSIGN_VALUE;
 
 		}
 		return false; // Tried every available row, so it is time to call it quits
