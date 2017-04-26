@@ -7,6 +7,14 @@
 
 using namespace std;
 
+///////////////////////
+// Ben Morledge-Hampton
+// 
+// Recursion
+//
+// 4/25/2017
+///////////////////////
+
 const int UNASSIGN_VALUE = -1;
 
 const int NUMBER_ROWS = 8; // Number of rows in our chess board
